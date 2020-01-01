@@ -1,0 +1,70 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <!-- Required meta tags -->
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+
+    <!-- Bootstrap CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+
+    <title>Todos</title>
+
+    <style>
+      .table td.fit, .table th.fit {
+        white-space: nowrap;
+        width: 1%;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+
+      <h1>Todos</h1>
+
+      <table class="table table-striped table-bordered">
+        <thead>
+          <tr>
+            <th scope="col" class="fit">Id</th>
+            <th scope="col" >Title</th>
+            <th scope="col" class="fit">Priority</th>
+            <th scope="col" class="fit">Completed</th>
+            <th scope="col" class="fit">Actions</th>
+          </tr>
+        </thead>
+          
+        {#for todo in todos} 
+        <tr>
+          <th scope="row">{todo.id}</th>
+          <td {#if todo.completed}style="text-decoration: line-through;"{/if}>
+            {todo.title}
+          </td>
+          <td {#if todo.completed}style="text-decoration: line-through;"{/if}>
+            {todo.order}
+          </td>
+          <td>
+            <div class="custom-control custom-checkbox">
+              <input type="checkbox" class="custom-control-input" disabled id="completed-{todo.id}" {#if todo.completed}checked{/if}>
+              <label class="custom-control-label" for="customCheck1"></label>
+            </div>
+          </td>
+          <td class="fit">
+            <form action="/todo/{todo.id}/delete" method="POST" name="delete-{todo.id}">
+              <a class="btn btn-primary btn-sm" href="/todo/{todo.id}/edit" role="button">Update</a>
+              <input class="btn btn-danger btn-sm" value="Delete" type="submit">
+            </form>
+          </td>
+        </tr>
+        {/for}
+      </table>
+      <a href="/todo/new">Create new</a>
+
+    </div>
+
+    <!-- Optional JavaScript -->
+    <!-- jQuery first, then Popper.js, then Bootstrap JS -->
+    <script src="https://code.jquery.com/jquery-3.4.1.slim.min.js" integrity="sha384-J6qa4849blE2+poT4WnyKhv5vZF5SrPo0iEjwBvKU7imGFAV0wwj1yYfoRSJoZ+n" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.16.0/dist/umd/popper.min.js" integrity="sha384-Q6E9RHvbIyZFJoft+2mJbHaEWldlvI9IOYy5n3zV9zzTtmI3UksdQRVvoxMfooAo" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/js/bootstrap.min.js" integrity="sha384-wfSDF2E50Y2D1uUdj0O3uMBJnjuUD4Ih7YwaYd1iqfktj0Uod8GCExl3Og8ifwB6" crossorigin="anonymous"></script>
+  </body>
+</html>
