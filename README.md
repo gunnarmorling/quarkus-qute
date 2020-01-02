@@ -1,8 +1,36 @@
-# quarkus-qute project
+# quarkus-qute
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+Demo of using Quarkus with server-side templates via its Qute extension an Unpoly for client-side enhancements.
 
 If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+
+## Database set-up
+
+This project uses Postgres which can be started via Docker Compose:
+
+```shell
+cd compose
+docker-compose up
+```
+
+A database "tododb", a user and schema are all configured automatically, so no further setup is needed.
+If the database doesn't show up in PGAdmin,
+the definition can be imported like this:
+
+```shell
+docker exec -it pgadmin_container python setup.py --load-servers /pgadmin4/servers.json --user pgadmin4@pgadmin.org
+```
+
+To browse the database, go to http://localhost:5050/browser/ and log in with user name "pgadmin4@pgadmin.org" and password "admin".
+To connect to the "tododb" database, use "todopw" as password when requested.
+
+## Unpoly
+
+This project uses [Unpoly](https://unpoly.com/) for a smoother user experience:
+links and form submissions will be intercepted and executed as AJAX requests,
+avoiding a full page reload by replacing page fragments.
+
+If JavaScript is disabled, the application gracefully falls back to the regular mode and experience of server-side rendered applications.
 
 ## Running the application in dev mode
 
