@@ -17,13 +17,19 @@
 <table class="table table-striped table-bordered">
   <thead>
     <tr>
-      <th scope="col" class="fit">Id</th>
+      <th scope="col" class="fit">Id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
       <th scope="col" >Title</th>
       <th scope="col" class="fit">Priority</th>
       <th scope="col" class="fit">Completed</th>
       <th scope="col" class="fit">Actions</th>
     </tr>
   </thead>
+
+  {#if todos.size == 0}
+  <tr>
+    <td colspan="5">No data found.</td>
+  </tr>
+  {#else}
 
   {#for todo in todos}
   <tr>
@@ -48,6 +54,7 @@
     </td>
   </tr>
   {/for}
+  {/if}
 </table>
 
 <hr>
