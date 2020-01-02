@@ -1,5 +1,5 @@
 {#include base.html}
-{#title}Todos{/title}
+{#title}My Todos{/title}
 {#contents}
 
 <form action="/todo" method="GET" name="search" up-target=".container">
@@ -48,7 +48,7 @@
     </td>
     <td class="fit">
       <form action="/todo/{todo.id}/delete" method="POST" name="delete-{todo.id}" up-target=".container">
-        <a class="btn btn-primary btn-sm" href="/todo/{todo.id}/edit" role="button" up-modal="#todoform">Edit</a>
+        <a class="btn btn-primary btn-sm" href="/todo/{todo.id}/edit" role="button" up-modal=".modalenabled">Edit</a>
         <input class="btn btn-danger btn-sm" value="Delete" type="submit">
       </form>
     </td>
