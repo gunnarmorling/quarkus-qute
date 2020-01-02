@@ -2,7 +2,7 @@
 {#title}Todos{/title}
 {#contents}
 
-<form action="/todo" method="GET" name="search">
+<form action="/todo" method="GET" name="search" up-target=".container">
   <div class="form-row align-items-center">
     <div class="col-sm-3 my-1">
       <label class="sr-only" for="filter">Search</label>
@@ -10,7 +10,7 @@
     </div>
 
     <input class="btn btn-primary" value="Search" type="submit">&nbsp;
-    <a class="btn btn-secondary {#if !filtered}disabled{/if}" href="/todo" role="button">Clear Filter</a>
+    <a class="btn btn-secondary {#if !filtered}disabled{/if}" href="/todo" role="button" up-target=".container">Clear Filter</a>
   </div>
 </form>
 
@@ -47,8 +47,8 @@
       </div>
     </td>
     <td class="fit">
-      <form action="/todo/{todo.id}/delete" method="POST" name="delete-{todo.id}">
-        <a class="btn btn-primary btn-sm" href="/todo/{todo.id}/edit" role="button">Edit</a>
+      <form action="/todo/{todo.id}/delete" method="POST" name="delete-{todo.id}" up-target=".container">
+        <a class="btn btn-primary btn-sm" href="/todo/{todo.id}/edit" role="button" up-modal="#todoform">Edit</a>
         <input class="btn btn-danger btn-sm" value="Delete" type="submit">
       </form>
     </td>

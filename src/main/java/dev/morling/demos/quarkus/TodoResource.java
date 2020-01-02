@@ -6,7 +6,6 @@ import java.util.List;
 import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
-import javax.ws.rs.FormParam;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
@@ -15,6 +14,8 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+
+import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import io.quarkus.panache.common.Sort;
 import io.quarkus.panache.common.Sort.Direction;
@@ -54,21 +55,13 @@ public class TodoResource {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Transactional
     @Path("/new")
-    public Response addTodo(
-        @FormParam("title") String title,
-        @FormParam("completed") String completed,
-        @FormParam("priority") int priority) {
-
-        Todo todo = new Todo();
-        todo.title = title;
-        todo.completed = "on".equals(completed);
-        todo.priority = priority;
-
+    public Response addTodo(@MultipartForm TodoForm todoForm) {
+        Todo todo = todoForm.convertIntoTodo();
         todo.persist();
-        
+
         return Response.status(301)
             .location(URI.create("/todo"))
             .build();
@@ -89,14 +82,12 @@ public class TodoResource {
     }
 
     @POST
-    @Consumes(MediaType.APPLICATION_FORM_URLENCODED)
+    @Consumes(MediaType.MULTIPART_FORM_DATA)
     @Transactional
     @Path("/{id}/edit")
     public Object updateTodo(
         @PathParam("id") long id,
-        @FormParam("title") String title,
-        @FormParam("completed") String completed,
-        @FormParam("priority") int priority) {
+        @MultipartForm TodoForm todoForm) {
 
         Todo loaded = Todo.findById(id);
 
@@ -104,9 +95,7 @@ public class TodoResource {
             return error.data("error", "Todo with id " + id + " has been deleted after loading this form.");
         }
 
-        loaded.title = title;
-        loaded.completed = "on".equals(completed);
-        loaded.priority = priority;
+        loaded = todoForm.updateTodo(loaded);
 
         return Response.status(301)
             .location(URI.create("/todo"))
