@@ -2,6 +2,8 @@ package dev.morling.demos.quarkus;
 
 import java.net.URI;
 import java.util.List;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
@@ -34,24 +36,36 @@ public class TodoResource {
     @Inject
     Template todos;
 
+    final List<Integer> priorities = IntStream.range(1, 6).boxed().collect(Collectors.toList());
+
     @GET
+    @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance listTodos(@QueryParam("filter") String filter) {
+        return todos.data("todos", find(filter))
+            .data("priorities", priorities)
+            .data("filter", filter)
+            .data("filtered", filter != null && !filter.isEmpty());
+    }
+
+    @GET
+    @Produces(MediaType.APPLICATION_JSON)
+    @Consumes(MediaType.APPLICATION_JSON)
+    public List<Todo> listTodosJson(@QueryParam("filter") String filter) {
+        return find(filter);
+    }
+
+    private List<Todo> find(String filter) {
         Sort sort = Sort.ascending("completed")
             .and("priority", Direction.Descending)
             .and("title", Direction.Ascending);
 
-        List<Todo> results;
         if (filter != null && !filter.isEmpty()) {
-            results = Todo.find("LOWER(title) LIKE LOWER(?1)", sort, "%" + filter + "%").list();
+            return Todo.find("LOWER(title) LIKE LOWER(?1)", sort, "%" + filter + "%").list();
         }
         else {
-            results = Todo.findAll(sort).list();
+            return Todo.findAll(sort).list();
         }
-
-        return todos.data("todos", results)
-            .data("filter", filter)
-            .data("filtered", filter != null && !filter.isEmpty());
     }
 
     @POST
@@ -78,6 +92,7 @@ public class TodoResource {
         }
 
         return todo.data("todo", loaded)
+            .data("priorities", priorities)
             .data("update", true);
     }
 

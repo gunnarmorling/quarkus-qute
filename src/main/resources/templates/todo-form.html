@@ -9,11 +9,9 @@
       <div class="col-auto my-1">
         <select class="custom-select"  name="priority">
           <option disabled value="">Priority</option>
-          <option value="1" {#if todo.priority == 1}selected{/if}>1</option>
-          <option value="2" {#if todo.priority == 2}selected{/if}>2</option>
-          <option value="3" {#if todo.priority == 3}selected{/if}>3</option>
-          <option value="4" {#if todo.priority == 4}selected{/if}>4</option>
-          <option value="5" {#if todo.priority == 5}selected{/if}>5</option>
+          {#for prio in priorities}
+          <option value="{prio}" {#if todo.priority == prio}selected{/if}>{prio}</option>
+          {/for}
         </select>
       </div>
 
