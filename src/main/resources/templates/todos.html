@@ -34,10 +34,10 @@
   {#for todo in todos}
   <tr>
     <th scope="row">#{todo.id}</th>
-    <td {#if todo.completed}style="text-decoration: line-through;"{/if}>
+    <td {#if todo.completed}class="completed"{/if}>
       {todo.title}
     </td>
-    <td {#if todo.completed}style="text-decoration: line-through;"{/if}>
+    <td {#if todo.completed}class="completed"{/if}>
       {todo.priority}
     </td>
     <td>
