@@ -8,8 +8,6 @@ import javax.persistence.Entity;
 public class Todo extends PanacheEntity {
 
     public String title;
-
     public int priority;
-
     public boolean completed;
 }

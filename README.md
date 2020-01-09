@@ -56,3 +56,10 @@ Or you can use Docker to build the native executable using: `./mvnw package -Pna
 You can then execute your binary: `./target/quarkus-qute-1.0.0-SNAPSHOT-runner`
 
 If you want to learn more about building native executables, please consult https://quarkus.io/guides/building-native-image-guide .
+
+## Running the native executable via Docker
+
+```
+docker build -f src/main/docker/Dockerfile.native -t quarkus-examples/quarkus-qute .
+docker run -i --rm -p 8080:8080 --network todo-network -e QUARKUS_DATASOURCE_URL=jdbc:postgresql://todo-db:5432/tododb quarkus-examples/quarkus-qute
+```

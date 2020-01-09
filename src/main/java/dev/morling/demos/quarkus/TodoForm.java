@@ -1,8 +1,5 @@
 package dev.morling.demos.quarkus;
 
-import io.quarkus.hibernate.orm.panache.PanacheEntity;
-
-import javax.persistence.Entity;
 import javax.ws.rs.FormParam;
 
 public class TodoForm {
