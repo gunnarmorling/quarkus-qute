@@ -39,6 +39,8 @@ You can run your application in dev mode that enables live coding using:
 ./mvnw quarkus:dev
 ```
 
+Then open the application in your browser at http://localhost:8080/todo.
+
 ## Packaging and running the application
 
 The application is packageable using `./mvnw package`.

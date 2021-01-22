@@ -1,7 +1,7 @@
 version: '2.1'
 services:
   todo-db:
-    image: postgres:11
+    image: postgres:13
     ports:
      - 5432:5432
     environment:

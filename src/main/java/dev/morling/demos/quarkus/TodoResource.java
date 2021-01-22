@@ -70,6 +70,7 @@ public class TodoResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
+    @Produces(MediaType.TEXT_PLAIN)
     @Transactional
     @Path("/new")
     public Response addTodo(@MultipartForm TodoForm todoForm) {
