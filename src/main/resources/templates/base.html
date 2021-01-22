@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.4.1/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css" integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
     <script src="https://unpkg.com/unpoly@0.61.0/dist/unpoly.min.js" integrity="sha384-gW6zzUz/Kx42R/cIyfZeFdlW18HuD/vtSCfsv6cdlfeg3CRqh89KzWER1dQ1i4BJ" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="https://unpkg.com/unpoly@0.61.0/dist/unpoly.min.css" integrity="sha384-Au6LjS9fxDpwn3+26YmukmOumZUmryd8ONenkVIoH4eEPH1tACqLsVfqz9tBrvQy" crossorigin="anonymous">
@@ -25,9 +25,10 @@
     </style>
   </head>
   <body>
-    <div class="container">
-      <h1>{#insert title}Default Title{/}</h1>
-
+    <div class="container mt-5" id="shell">
+      <div class="container">
+        <h1 class="display-3">{#insert title}Default Title{/}</h1>
+      </div>
       {#insert contents}No contents!{/}
     </div>
   </body>
