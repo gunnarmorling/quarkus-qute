@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
-import javax.inject.Inject;
 import javax.transaction.Transactional;
 import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
@@ -21,20 +20,18 @@ import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
 import io.quarkus.panache.common.Sort;
 import io.quarkus.panache.common.Sort.Direction;
-import io.quarkus.qute.Template;
 import io.quarkus.qute.TemplateInstance;
+import io.quarkus.qute.api.CheckedTemplate;
 
 @Path("/todo")
 public class TodoResource {
 
-    @Inject
-    Template error;
-
-    @Inject
-    Template todo;
-
-    @Inject
-    Template todos;
+    @CheckedTemplate
+    public static class Templates {
+        public static native TemplateInstance error(String message);
+        public static native TemplateInstance todo(Todo todo, List<Integer> priorities, boolean update);
+        public static native TemplateInstance todos(List<Todo> todos, List<Integer> priorities, String filter, boolean filtered);
+    }
 
     final List<Integer> priorities = IntStream.range(1, 6).boxed().collect(Collectors.toList());
 
@@ -42,10 +39,7 @@ public class TodoResource {
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance listTodos(@QueryParam("filter") String filter) {
-        return todos.data("todos", find(filter))
-            .data("priorities", priorities)
-            .data("filter", filter)
-            .data("filtered", filter != null && !filter.isEmpty());
+        return Templates.todos(find(filter), priorities, filter, filter != null && !filter.isEmpty());
     }
 
     @GET
@@ -89,12 +83,10 @@ public class TodoResource {
         Todo loaded = Todo.findById(id);
 
         if (loaded == null) {
-            return error.data("error", "Todo with id " + id + " does not exist.");
+            return Templates.error("Todo with id " + id + " does not exist.");
         }
 
-        return todo.data("todo", loaded)
-            .data("priorities", priorities)
-            .data("update", true);
+        return Templates.todo(loaded, priorities, true);
     }
 
     @POST
@@ -108,7 +100,7 @@ public class TodoResource {
         Todo loaded = Todo.findById(id);
 
         if (loaded == null) {
-            return error.data("error", "Todo with id " + id + " has been deleted after loading this form.");
+            return Templates.error("Todo with id " + id + " has been deleted after loading this form.");
         }
 
         loaded = todoForm.updateTodo(loaded);
