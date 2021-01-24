@@ -1,12 +1,17 @@
 <div class="modalenabled">
-  <form action="/todo/{#if update}{todo.id}/edit{#else}new{/if}" method="POST" name="todoForm" up-target="#shell" enctype="multipart/form-data">
-    <div class="form-row align-items-center">
-      <div class="col-sm-3 my-1">
+  <form action="/todo/{#if update}{todo.id}/edit{#else}new{/if}" method="POST" name="todoForm" enctype="multipart/form-data">
+    <div class="form-row align-items-center ml-1 mr-1">
+      {#if !update}
+      <div class="mb-2 mr-sm-2 pt-2">
+        <label>New Todo:</label>
+      </div>
+      {/if}
+      <div class="mb-2 mr-sm-2">
         <label class="sr-only" for="title">Title</label>
-        <input type="text" name="title" class="form-control" id="title" placeholder="Title" required autofocus {#if update}value="{todo.title}"{/if}>
+        <input type="text" name="title" class="form-control" id="title" placeholder="Title" required {#if update}value="{todo.title}"{/if}>
       </div>
 
-      <div class="col-auto my-1">
+      <div class="mb-2 mr-sm-2">
         <select class="custom-select"  name="priority">
           <option disabled value="">Priority</option>
           {#for prio in priorities}
@@ -16,7 +21,7 @@
       </div>
 
       {#if update}
-      <div class="col-auto my-1">
+      <div class="mb-2 mr-sm-2">
         <div class="form-check">
           <input type="checkbox" name="completed" class="form-check-input" id="completed" {#if update}{#if todo.completed}checked{/if}{/if}>
           <label class="form-check-label" for="completed">Completed</label>
@@ -24,7 +29,7 @@
       </div>
       {/if}
 
-      <button type="submit" class="btn btn-primary">{#if update}Update{#else}Create{/if}</button>
+      <button type="submit" class="btn btn-primary mb-2">{#if update}Update{#else}Create{/if}</button>
     </div>
   </form>
 </div>

@@ -1,12 +1,15 @@
 package dev.morling.demos.quarkus;
 
 import javax.ws.rs.FormParam;
+import javax.ws.rs.core.MediaType;
+
+import org.jboss.resteasy.annotations.providers.multipart.PartType;
 
 public class TodoForm {
 
-    public @FormParam("title") String title;
-    public @FormParam("completed") String completed;
-    public @FormParam("priority") int priority;
+    public @FormParam("title") @PartType(MediaType.TEXT_PLAIN) String title;
+    public @FormParam("completed") @PartType(MediaType.TEXT_PLAIN) String completed;
+    public @FormParam("priority") @PartType(MediaType.TEXT_PLAIN) int priority;
 
     public Todo convertIntoTodo() {
         Todo todo = new Todo();

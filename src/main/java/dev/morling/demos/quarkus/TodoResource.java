@@ -15,6 +15,7 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
+import javax.ws.rs.core.Response.Status;
 
 import org.jboss.resteasy.annotations.providers.multipart.MultipartForm;
 
@@ -30,7 +31,7 @@ public class TodoResource {
     public static class Templates {
         public static native TemplateInstance error(String message);
         public static native TemplateInstance todo(Todo todo, List<Integer> priorities, boolean update);
-        public static native TemplateInstance todos(List<Todo> todos, List<Integer> priorities, String filter, boolean filtered);
+        public static native TemplateInstance todos(List<Todo> todos, long totalCount, List<Integer> priorities, String filter, boolean filtered);
     }
 
     final List<Integer> priorities = IntStream.range(1, 6).boxed().collect(Collectors.toList());
@@ -39,7 +40,7 @@ public class TodoResource {
     @Consumes(MediaType.TEXT_HTML)
     @Produces(MediaType.TEXT_HTML)
     public TemplateInstance listTodos(@QueryParam("filter") String filter) {
-        return Templates.todos(find(filter), priorities, filter, filter != null && !filter.isEmpty());
+        return Templates.todos(find(filter), Todo.count(), priorities, filter, filter != null && !filter.isEmpty());
     }
 
     @GET
@@ -64,14 +65,13 @@ public class TodoResource {
 
     @POST
     @Consumes(MediaType.MULTIPART_FORM_DATA)
-    @Produces(MediaType.TEXT_PLAIN)
     @Transactional
     @Path("/new")
     public Response addTodo(@MultipartForm TodoForm todoForm) {
         Todo todo = todoForm.convertIntoTodo();
         todo.persist();
 
-        return Response.status(301)
+        return Response.status(Status.SEE_OTHER)
             .location(URI.create("/todo"))
             .build();
     }

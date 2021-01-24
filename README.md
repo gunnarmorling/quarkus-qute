@@ -1,8 +1,8 @@
 # quarkus-qute
 
-Demo of using Quarkus with server-side templates via its Qute extension an Unpoly for client-side enhancements.
+Demo of using Quarkus with server-side templates via its Qute extension and Hotwire for client-side enhancements.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+If you want to learn more about Quarkus, please visit its website: https://quarkus.io/.
 
 ## Database set-up
 
@@ -24,9 +24,9 @@ docker exec -it pgadmin_container python setup.py --load-servers /pgadmin4/serve
 To browse the database, go to http://localhost:5050/browser/ and log in with user name "pgadmin4@pgadmin.org" and password "admin".
 To connect to the "tododb" database, use "todopw" as password when requested.
 
-## Unpoly
+## Hotwire
 
-This project uses [Unpoly](https://unpoly.com/) for a smoother user experience:
+This project uses [Hotwire](https://hotwire.dev/) for a smoother user experience:
 links and form submissions will be intercepted and executed as AJAX requests,
 avoiding a full page reload by replacing page fragments.
 

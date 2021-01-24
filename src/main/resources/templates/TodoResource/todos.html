@@ -3,17 +3,26 @@
 {#contents}
 
 <div class="container mt-3">
-<form action="/todo" method="GET" name="search" up-target="#shell">
-  <div class="form-row align-items-center">
-    <div class="col-sm-3 my-1">
-      <label class="sr-only" for="filter">Search</label>
-      <input type="text" name="filter" class="form-control" id="filter" placeholder="Search By Title" required {#if filtered}value="{filter}"{/if}>
+  <div class="row">
+    <div class="col-sm">
+      {#include todo-form.html}{/include}
     </div>
+    <div class="col-sm">
+      <form action="/todo" method="GET" name="search" class="form-inline float-sm-right">
+          <label class="sr-only" for="filter">Search</label>
 
-    <input class="btn btn-primary" value="Search" type="submit">&nbsp;
-    <a class="btn btn-secondary {#if !filtered}disabled{/if}" href="/todo" role="button" up-target="#shell">Clear Filter</a>
+          <div class="input-group mr-2">
+            <input class="form-control py-2" type="search" name="filter" id="filter" placeholder="Search By Title" required {#if filtered}value="{filter}"{/if}>
+            <span class="input-group-append">
+              <button class="btn btn-outline-secondary" type="submit">
+                  <i class="fa fa-search"></i>
+              </button>
+            </span>
+          </div>
+          <a class="btn btn-secondary {#if !filtered}disabled{/if}" href="/todo" role="button">Clear</a>
+      </form>
+    </div>
   </div>
-</form>
 </div>
 
 <div class="container mt-2">
@@ -21,7 +30,7 @@
   <thead class="thead-dark">
     <tr>
       <th scope="col" class="fit">Id&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</th>
-      <th scope="col" >Title</th>
+      <th scope="col">Title</th>
       <th scope="col" class="fit">Priority</th>
       <th scope="col" class="fit">Completed</th>
       <th scope="col" class="fit">Actions</th>
@@ -50,8 +59,8 @@
       </div>
     </td>
     <td class="fit">
-      <form action="/todo/{todo.id}/delete" method="POST" name="delete-{todo.id}" up-target="#shell">
-        <a class="btn btn-primary btn-sm" href="/todo/{todo.id}/edit" role="button" up-modal=".modalenabled">Edit</a>
+      <form action="/todo/{todo.id}/delete" method="POST" name="delete-{todo.id}">
+        <a class="btn btn-primary btn-sm" href="/todo/{todo.id}/edit" role="button">Edit</a>
         <input class="btn btn-danger btn-sm" value="Delete" type="submit">
       </form>
     </td>
@@ -59,12 +68,7 @@
   {/for}
   {/if}
 </table>
-</div>
-
-<div class="container mt-2">
-<hr>
-<h2>New Todo</h2>
-{#include todo-form.html}{/include}
+<p class="pl-2">{todos.size} out of {totalCount}</p>
 </div>
 
 {/contents}
