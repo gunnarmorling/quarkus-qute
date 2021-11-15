@@ -65,3 +65,7 @@ If you want to learn more about building native executables, please consult http
 docker build -f src/main/docker/Dockerfile.native -t quarkus-examples/quarkus-qute .
 docker run -i --rm -p 8080:8080 --network todo-network -e QUARKUS_DATASOURCE_URL=jdbc:postgresql://todo-db:5432/tododb quarkus-examples/quarkus-qute
 ```
+
+## License
+
+This code base is available ander the Apache License, version 2.
